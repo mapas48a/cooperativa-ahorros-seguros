@@ -151,5 +151,70 @@ do
                         Console.WriteLine("Error: seleccione una opción del 1 al 4.");
                         break;
                 }
+
+                
+        // Iniciamos el simulador de préstamos.
+        case 2:
+            string repetir;
+
+            do
+            {
+                decimal monto;
+                bool montoValido;
+
+                // Solicitamos el monto hasta recibir un valor permitido.
+                do
+                {
+                    Console.Write("\nMonto del préstamo (5000 a 500000; use punto decimal y sin separadores de miles): ");
+                    string? entradaMonto = Console.ReadLine();
+                    if (entradaMonto is null) return;
+
+                    montoValido = decimal.TryParse(entradaMonto, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, cultura, out monto)
+                        && monto >= 5000m && monto <= 500000m;
+
+                    if (!montoValido)
+                        Console.WriteLine("Error: introduzca un monto entre RD$5,000 y RD$500,000.");
+                } while (!montoValido);
+
+                int plazo;
+                bool plazoValido;
+
+                // Validamos que el plazo esté entre 6 y 60 meses.
+                do
+                {
+                    Console.Write("Plazo en meses (6 a 60): ");
+                    string? entradaPlazo = Console.ReadLine();
+                    if (entradaPlazo is null) return;
+
+                    plazoValido = int.TryParse(entradaPlazo, out plazo)
+                        && plazo >= 6 && plazo <= 60;
+
+                    if (!plazoValido)
+                        Console.WriteLine("Error: el plazo debe ser un entero entre 6 y 60.");
+                } while (!plazoValido);
+
+                decimal tasaAnual = 0m;
+                string categoria;
+
+                // Asignamos la tasa anual según la categoría del socio.
+                do
+                {
+                    Console.Write("Categoría del socio (A: 12 %, B: 15 %, C: 18 %): ");
+                    string? entradaCategoria = Console.ReadLine();
+                    if (entradaCategoria is null) return;
+
+                    categoria = entradaCategoria.Trim().ToUpperInvariant();
+
+                    switch (categoria)
+                    {
+                        case "A": tasaAnual = 0.12m; break;
+                        case "B": tasaAnual = 0.15m; break;
+                        case "C": tasaAnual = 0.18m; break;
+                        default:
+                            Console.WriteLine("Error: categoría inválida. Use A, B o C.");
+                            break;
+                    }
+                } while (tasaAnual == 0m);
+
             } while (opcionCajero != 4);
             break;
