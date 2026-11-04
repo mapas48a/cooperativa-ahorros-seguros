@@ -95,7 +95,7 @@ do
                         Console.WriteLine($"Saldo actual: RD${saldo.ToString("N2", cultura)}");
                         break;
 
-// Opción para depositar dinero.
+                // Opción para depositar dinero.
                     case 2:
                         Console.Write("Monto a depositar (ejemplo: 1500.50): ");
                         string? entradaDeposito = Console.ReadLine();
@@ -151,8 +151,9 @@ do
                         Console.WriteLine("Error: seleccione una opción del 1 al 4.");
                         break;
                 }
-
-                
+            } while (opcionCajero != 4);
+            break;
+            
         // Iniciamos el simulador de préstamos.
         case 2:
             string repetir;
@@ -215,9 +216,6 @@ do
                             break;
                     }
                 } while (tasaAnual == 0m);
-
-            } while (opcionCajero != 4);
-            break;
 
                 // Convertimos la tasa anual a mensual.
                 decimal tasaMensual = tasaAnual / 12m;
