@@ -95,3 +95,61 @@ do
                         Console.WriteLine($"Saldo actual: RD${saldo.ToString("N2", cultura)}");
                         break;
 
+// Opción para depositar dinero.
+                    case 2:
+                        Console.Write("Monto a depositar (ejemplo: 1500.50): ");
+                        string? entradaDeposito = Console.ReadLine();
+                        if (entradaDeposito is null) return;
+
+                        // Comprobamos que el depósito sea válido y mayor que cero.
+                        if (!decimal.TryParse(entradaDeposito, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, cultura, out decimal deposito))
+                            Console.WriteLine("Error: el depósito debe ser un número válido, sin separadores de miles.");
+                        else if (deposito <= 0)
+                            Console.WriteLine("Error: el depósito debe ser mayor que cero.");
+                        else if (deposito > decimal.MaxValue - saldo)
+                            Console.WriteLine("Error: el monto supera la capacidad del saldo.");
+                        else
+                        {
+                            // Sumamos el depósito al saldo y actualizamos el contador.
+                            saldo += deposito;
+                            depositos++;
+                            Console.WriteLine($"Depósito exitoso. Saldo actual: RD${saldo.ToString("N2", cultura)}");
+                        }
+                        break;
+
+                    // Opción para retirar dinero.
+                    case 3:
+                        Console.Write("Monto a retirar (múltiplo de 100): ");
+                        string? entradaRetiro = Console.ReadLine();
+                        if (entradaRetiro is null) return;
+
+                        // Validamos el monto, el saldo y los múltiplos de RD$100.
+                        if (!decimal.TryParse(entradaRetiro, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, cultura, out decimal retiro))
+                            Console.WriteLine("Error: el retiro debe ser un número válido, sin separadores de miles.");
+                        else if (retiro <= 0)
+                            Console.WriteLine("Error: el retiro debe ser mayor que cero.");
+                        else if (retiro > saldo)
+                            Console.WriteLine("Error: saldo insuficiente.");
+                        else if (retiro % 100m != 0)
+                            Console.WriteLine("Error: el retiro debe ser múltiplo exacto de RD$100.");
+                        else
+                        {
+                            // Restamos el retiro del saldo y actualizamos el contador.
+                            saldo -= retiro;
+                            retiros++;
+                            Console.WriteLine($"Retiro exitoso. Saldo actual: RD${saldo.ToString("N2", cultura)}");
+                        }
+                        break;
+
+                    // Mostramos el resumen al salir del cajero.
+                    case 4:
+                        Console.WriteLine($"\nResumen del cajero\nDepósitos realizados: {depositos}\nRetiros realizados: {retiros}");
+                        Console.WriteLine($"Saldo final: RD${saldo.ToString("N2", cultura)}");
+                        break;
+
+                    default:
+                        Console.WriteLine("Error: seleccione una opción del 1 al 4.");
+                        break;
+                }
+            } while (opcionCajero != 4);
+            break;
