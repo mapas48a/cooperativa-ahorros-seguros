@@ -85,7 +85,7 @@ Se realiza un depósito de RD$2,000 y un retiro de RD$1,000, obteniendo un saldo
 
 Nombre del archivo:cajero-exitoso.png
 
-![Cajero automático - Depósito y retiro exitosos](capturas/cajero-exitoso.png)
+![Cajero exitoso](cajero-exitoso.png)
 
 Captura 2: Validación de errores
 
@@ -93,7 +93,7 @@ Se muestran intentos de PIN incorrectos y un retiro rechazado por saldo insufici
 
 Nombre del archivo:cajero-error.png
 
-![Cajero automático - Validación de errores](capturas/cajero-error.png)
+![Cajero con errores](cajero-error.png)
 
 Ejercicio 2 — Simulador de préstamo
 
@@ -103,7 +103,7 @@ Préstamo de RD$10,000 a 6 meses, categoría A, con cuota mensual aproximada de 
 
 Nombre del archivo:prestamo-exitoso.png
 
-![Simulador de préstamo - Simulación exitosa](capturas/prestamo-exitoso.png)
+![Préstamo exitoso](prestamo-exitoso.png)
 
 Captura 4: Validación de errores
 
@@ -111,7 +111,8 @@ Se muestran errores al introducir un monto inferior al mínimo, un plazo inváli
 
 Nombre del archivo:prestamo-error.png
 
-![Simulador de préstamo - Validación de errores](capturas/prestamo-error.png)
+![Préstamo con errores](prestamo-error.png)
+
 
 8. Cómo ejecutar el programa
 
