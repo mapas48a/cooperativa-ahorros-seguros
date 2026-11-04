@@ -42,3 +42,56 @@ do
                 Console.Write("Introduzca su PIN de cuatro dígitos: ");
                 string? pinIngresado = Console.ReadLine();
                 if (pinIngresado is null) return;
+
+                
+                // Verificamos si el PIN ingresado es correcto.
+                if (pinIngresado == pinCorrecto)
+                {
+                    accesoPermitido = true;
+                    intentosPin = 0;
+                }
+                else
+                {
+                    // Contamos los intentos incorrectos.
+                    intentosPin++;
+                    Console.WriteLine($"PIN incorrecto. Intentos restantes: {3 - intentosPin}.");
+                }
+            }
+
+            // Bloqueamos la cuenta si falla los tres intentos.
+            if (!accesoPermitido)
+            {
+                cuentaBloqueada = true;
+                Console.WriteLine("Cuenta bloqueada tras tres intentos fallidos.");
+                break;
+            }
+
+            // Inicializamos los contadores de operaciones del cajero.
+            int depositos = 0;
+            int retiros = 0;
+            int opcionCajero;
+
+            // Mostramos el menú hasta que el usuario decida salir.
+            do
+            {
+                Console.WriteLine("\n========== CAJERO AUTOMÁTICO ==========");
+                Console.WriteLine("1. Consultar saldo\n2. Depositar dinero\n3. Retirar dinero\n4. Salir del cajero");
+                Console.Write("Seleccione una opción: ");
+
+                string? entradaCajero = Console.ReadLine();
+                if (entradaCajero is null) return;
+
+                // Validamos que la opción sea numérica.
+                if (!int.TryParse(entradaCajero, out opcionCajero))
+                {
+                    Console.WriteLine("Error: introduzca una opción numérica del 1 al 4.");
+                    continue;
+                }
+
+                switch (opcionCajero)
+                {
+                    // Consultamos el saldo disponible.
+                    case 1:
+                        Console.WriteLine($"Saldo actual: RD${saldo.ToString("N2", cultura)}");
+                        break;
+
