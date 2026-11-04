@@ -218,3 +218,75 @@ do
 
             } while (opcionCajero != 4);
             break;
+
+                // Convertimos la tasa anual a mensual.
+                decimal tasaMensual = tasaAnual / 12m;
+
+                // Calculamos la cuota fija del préstamo.
+                decimal potencia = (decimal)Math.Pow((double)(1m + tasaMensual), plazo);
+                decimal cuota = monto * (tasaMensual * potencia) / (potencia - 1m);
+
+                // Inicializamos las variables de la amortización.
+                decimal saldoPrestamo = monto;
+                decimal totalPagado = 0m;
+                decimal totalIntereses = 0m;
+
+                Console.WriteLine("\n Mes |        Cuota |      Interés | Abono a capital |        Saldo");
+
+                // Recorremos cada mes para calcular los pagos.
+                for (int mes = 1; mes <= plazo; mes++)
+                {
+                    decimal interes = saldoPrestamo * tasaMensual;
+                    decimal abonoCapital = cuota - interes;
+                    decimal pagoMes = cuota;
+
+                    // Ajustamos el último pago para dejar el saldo en cero.
+                    if (mes == plazo)
+                    {
+                        abonoCapital = saldoPrestamo;
+                        pagoMes = abonoCapital + interes;
+                    }
+
+                    // Actualizamos el saldo y acumulamos los totales.
+                    saldoPrestamo -= abonoCapital;
+                    totalPagado += pagoMes;
+                    totalIntereses += interes;
+
+                    Console.WriteLine($"{mes,4} | {pagoMes.ToString("N2", cultura),12} | {interes.ToString("N2", cultura),12} | {abonoCapital.ToString("N2", cultura),15} | {saldoPrestamo.ToString("N2", cultura),12}");
+                }
+
+                // Presentamos el resumen del préstamo.
+                Console.WriteLine("\nResumen del préstamo (valores en RD$)");
+                Console.WriteLine($"Monto solicitado: {monto.ToString("N2", cultura)}\nCategoría: {categoria}");
+                Console.WriteLine($"Tasa anual: {(tasaAnual * 100m).ToString("0.##", cultura)} %\nPlazo: {plazo} meses");
+                Console.WriteLine($"Cuota mensual: {cuota.ToString("N2", cultura)}\nTotal pagado: {totalPagado.ToString("N2", cultura)}");
+                Console.WriteLine($"Total de intereses pagados: {totalIntereses.ToString("N2", cultura)}\nSaldo final: {saldoPrestamo.ToString("N2", cultura)}");
+
+                // Preguntamos si desea realizar otra simulación.
+                do
+                {
+                    Console.Write("¿Desea simular otro préstamo? (S/N): ");
+                    string? entradaRepetir = Console.ReadLine();
+                    if (entradaRepetir is null) return;
+
+                    repetir = entradaRepetir.Trim().ToUpperInvariant();
+
+                    if (repetir != "S" && repetir != "N")
+                        Console.WriteLine("Error: responda S o N.");
+
+                } while (repetir != "S" && repetir != "N");
+
+            } while (repetir == "S");
+            break;
+
+        // Opción para finalizar el programa.
+        case 3:
+            Console.WriteLine("Gracias por utilizar Cooperativa Ahorro Seguro. ¡Hasta pronto!");
+            break;
+
+        // Controlamos las opciones inválidas del menú principal.
+        default:
+            Console.WriteLine("Error: seleccione una opción del 1 al 3.");
+            break;
+    }
+} while (opcionPrincipal != 3);
